@@ -1,16 +1,16 @@
-# base-project
+# 单页应用项目
 
-## Project setup
+## 依赖安装
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### 项目运行
 ```
 yarn run serve
 ```
 
-### Compiles and minifies for production
+### 项目编译打包
 ```
 yarn run build
 ```
