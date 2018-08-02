@@ -47,7 +47,6 @@ module.exports = {
     devServer: {
         historyApiFallback: {
             rewrites: [
-                { from: new RegExp(baseUrl + 'index'), to: baseUrl + 'index.html' },
                 { from: new RegExp(baseUrl + 'page1'), to: baseUrl + 'page1.html' },
                 { from: new RegExp(baseUrl + 'page2'), to: baseUrl + 'page2.html' },
             ]
