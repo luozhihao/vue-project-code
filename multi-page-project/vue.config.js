@@ -40,7 +40,17 @@ module.exports = {
 
         // 使用 return 一个对象会通过 webpack-merge 进行合并
         return {
-            plugins: [...utils.htmlPlugin()]
+            plugins: [...utils.htmlPlugin({
+                addScript() {
+                    if (process.env.NODE_ENV === 'production') {
+                        return `
+                            <script src="https://s95.cnzz.com/z_stat.php?id=xxx&web_id=xxx" language="JavaScript"></script>
+                        `
+                    }
+
+                    return ''
+                }
+            })]
         }
     },
 
