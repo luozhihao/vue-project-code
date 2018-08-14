@@ -5,12 +5,12 @@ import store from './store/'
 
 Vue.config.productionTip = false
 
-console.log(JSON.stringify(process.env));
+console.log(JSON.stringify(process.env))
 
 // 如果是非线上环境，不加载 VConsole
 if (process.env.NODE_ENV !== 'production') {
-    var VConsole = require('vconsole/dist/vconsole.min.js');
-    var vConsole = new VConsole();
+    var VConsole = require('vconsole/dist/vconsole.min.js')
+    var vConsole = new VConsole()
 }
 
 new Vue({

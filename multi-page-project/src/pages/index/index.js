@@ -10,9 +10,12 @@ Vue.config.productionTip = false
 if (process.env.NODE_ENV !== 'production') {
     var VConsole = require('vconsole/dist/vconsole.min.js');
     var vConsole = new VConsole();
+
+    Vue.config.performance = true;
 }
 
-Vue.prototype.$openRouter = Navigator.openRouter;
+Vue.$openRouter = Vue.prototype.$openRouter = Navigator.openRouter;
+Vue.config.performance = true;
 
 new Vue({
   router,

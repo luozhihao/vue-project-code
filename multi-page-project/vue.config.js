@@ -1,11 +1,11 @@
-const configs = require('./config');
-const utils = require('./build/utils');
+const configs = require('./config')
+const utils = require('./build/utils')
 
 // 用于做相应的merge处理
-const merge = require('webpack-merge');
-const { DefinePlugin } = require('webpack');
+const merge = require('webpack-merge')
+const { DefinePlugin } = require('webpack')
 
-const cfg = process.env.NODE_ENV === 'production' ? configs.build.env : configs.dev.env;
+const cfg = process.env.NODE_ENV === 'production' ? configs.build.env : configs.dev.env
 
 let baseUrl = '/vue/';
 
@@ -13,6 +13,20 @@ module.exports = {
 	baseUrl: baseUrl,
 	outputDir: 'dist',
 	productionSourceMap: true,
+    pages: utils.setPages({
+        addScript() {
+            if (process.env.NODE_ENV === 'production') {
+                return `
+                    <script src="https://s95.cnzz.com/z_stat.php?id=xxx&web_id=xxx" language="JavaScript"></script>
+                `
+            }
+
+            return ''
+        }
+    }),
+    /*css: {
+        modules: true,
+    },*/
 	chainWebpack: config => {
 	    config.module
 	      	.rule('images')
@@ -23,23 +37,23 @@ module.exports = {
                 })
             )
 
-        config.plugin('define')
+        /*config.plugin('define')
             .tap(args => {
-                let name = 'process.env';
+                let name = 'process.env'
 
-                args[0][name] = merge(args[0][name], cfg);
+                args[0][name] = merge(args[0][name], cfg)
 
                 return args
-            })
+            })*/
 	},
 
 	configureWebpack: config => {
-        // config.plugins = []; // 这样会直接将 plugins 置空
+        // config.plugins = [] // 这样会直接将 plugins 置空
         
-        config.entry = utils.getEntries();
+        // config.entry = utils.getEntries()
 
         // 使用 return 一个对象会通过 webpack-merge 进行合并
-        return {
+        /*return {
             plugins: [...utils.htmlPlugin({
                 addScript() {
                     if (process.env.NODE_ENV === 'production') {
@@ -51,7 +65,7 @@ module.exports = {
                     return ''
                 }
             })]
-        }
+        }*/
     },
 
     devServer: {

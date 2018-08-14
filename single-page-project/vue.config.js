@@ -1,10 +1,10 @@
-const configs = require('./config');
+const configs = require('./config')
 
 // 用于做相应的merge处理
-const merge = require('webpack-merge');
-const { DefinePlugin } = require('webpack');
+const merge = require('webpack-merge')
+const { DefinePlugin } = require('webpack')
 
-const cfg = process.env.NODE_ENV === 'production' ? configs.build.env : configs.dev.env;
+const cfg = process.env.NODE_ENV === 'production' ? configs.build.env : configs.dev.env
 
 module.exports = {
 	baseUrl: 'vue',
@@ -24,14 +24,14 @@ module.exports = {
             .tap(args => {
                 let name = 'process.env';
 
-                args[0][name] = merge(args[0][name], cfg);
+                args[0][name] = merge(args[0][name], cfg)
 
                 return args
             })
 	},
 
 	configureWebpack: config => {
-        // config.plugins = []; // 这样会直接将 plugins 置空
+        // config.plugins = [] // 这样会直接将 plugins 置空
         
         // 使用 return 一个对象会通过 webpack-merge 进行合并
         return {

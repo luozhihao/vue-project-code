@@ -2,14 +2,14 @@ export default class Navigator {
 
     // 单页间跳转方法
     static openRouter({ query = {}, name = '', type = '' } = {}) {
-        let params = '';
+        let params = ''
 
         function formatQuery(query) {
-        	let params = '';
+        	let params = ''
 
         	if (query) {
         	    for (let item in query) {
-        	        let vals = query[item];
+        	        let vals = query[item]
 
         	        if (vals !== undefined) {
         	            params += item + '=' + vals + '&'
@@ -17,23 +17,23 @@ export default class Navigator {
         	    }
         	}
 
-        	params = params ? '?' + params : params;
+        	params = params ? '?' + params : params
 
-        	return params;
+        	return params
         }
 
         if (query) {
             params = formatQuery(query)
         }
 
-        let homepath = `/${location.pathname.split('/')[1]}/`; // 获取单页前缀
+        let homepath = `/${location.pathname.split('/')[1]}/` // 获取单页前缀
 
-        let url = `${homepath}${name}${params}`; // 拼接url
+        let url = `${homepath}${name}${params}` // 拼接url
 
         if (type === 'replace') {
-            location.replace(url); // replace 跳转
+            location.replace(url) // replace 跳转
         } else {
-            location.href = url; // href 跳转
+            location.href = url // href 跳转
         }
     }
 }

@@ -20,5 +20,9 @@
             <script type="text/javascript" src="<%= htmlWebpackPlugin.files.js[chunk] %>"></script>
         <%}%>
     <% } %>
+
+    <% if(htmlWebpackPlugin.options.addScript){ %>
+        <%= htmlWebpackPlugin.options.addScript('page1') %>
+    <%}%>
   </body>
 </html>

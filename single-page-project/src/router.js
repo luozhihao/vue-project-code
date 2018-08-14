@@ -19,7 +19,7 @@ const About = (resolve => {
 
 Vue.use(Router)
 
-let base = `${process.env.BASE_URL}`;
+let base = `${process.env.BASE_URL}`
 
 export default new Router({
   mode: 'history',
