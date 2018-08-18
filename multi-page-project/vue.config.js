@@ -1,11 +1,17 @@
+const path = require('path')
 const configs = require('./config')
 const utils = require('./build/utils')
 
 // 用于做相应的merge处理
 const merge = require('webpack-merge')
 const { DefinePlugin } = require('webpack')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
 const cfg = process.env.NODE_ENV === 'production' ? configs.build.env : configs.dev.env
+
+const resolve = dir => {
+    return path.join(__dirname, dir)
+}
 
 let baseUrl = '/vue/';
 
@@ -37,6 +43,13 @@ module.exports = {
                 })
             )
 
+        config.resolve.alias
+            .set('@', resolve('src'))
+            .set('_lib', resolve('src/common'))
+            .set('_com', resolve('src/components'))
+            .set('_img', resolve('src/images'))
+            .set('_ser', resolve('src/services'))
+
         /*config.plugin('define')
             .tap(args => {
                 let name = 'process.env'
@@ -66,6 +79,22 @@ module.exports = {
                 }
             })]
         }*/
+
+        if (process.env.NODE_ENV === 'production') {
+            return {
+                plugins: [
+                    new CompressionWebpackPlugin({
+                        asset: '[path].gz[query]',
+                        algorithm: 'gzip',
+                        test: new RegExp(
+                            '\\.(js|css)$'
+                        ),
+                        threshold: 10240,
+                        minRatio: 0.8
+                    })
+                ]
+            }
+        }
     },
 
     devServer: {

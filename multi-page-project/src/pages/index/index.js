@@ -2,20 +2,10 @@ import Vue from 'vue'
 import App from './index.vue'
 import router from './router'
 import store from '@/store/'
-import { Navigator } from '../../common'
+import entryConfig from '_lib/entryConfig/'
 
-Vue.config.productionTip = false
-
-// 如果是非线上环境，不加载 VConsole
-if (process.env.NODE_ENV !== 'production') {
-    var VConsole = require('vconsole/dist/vconsole.min.js');
-    var vConsole = new VConsole();
-
-    Vue.config.performance = true;
-}
-
-Vue.$openRouter = Vue.prototype.$openRouter = Navigator.openRouter;
-Vue.config.performance = true;
+// 调用公共方法加载配置
+entryConfig(Vue)
 
 new Vue({
   router,
