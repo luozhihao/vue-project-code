@@ -6,8 +6,10 @@ const utils = require('./build/utils')
 const merge = require('webpack-merge')
 const { DefinePlugin } = require('webpack')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-const cfg = process.env.NODE_ENV === 'production' ? configs.build.env : configs.dev.env
+const isPro = process.env.NODE_ENV === 'production'
+const cfg = isPro ? configs.build.env : configs.dev.env
 
 const resolve = dir => {
     return path.join(__dirname, dir)
@@ -21,7 +23,7 @@ module.exports = {
 	productionSourceMap: true,
     pages: utils.setPages({
         addScript() {
-            if (process.env.NODE_ENV === 'production') {
+            if (isPro) {
                 return `
                     <script src="https://s95.cnzz.com/z_stat.php?id=xxx&web_id=xxx" language="JavaScript"></script>
                 `
@@ -80,9 +82,11 @@ module.exports = {
             })]
         }*/
 
-        if (process.env.NODE_ENV === 'production') {
+        if (isPro) {
             return {
                 plugins: [
+
+                    // 开启 Gzip 压缩
                     new CompressionWebpackPlugin({
                         asset: '[path].gz[query]',
                         algorithm: 'gzip',
@@ -91,7 +95,10 @@ module.exports = {
                         ),
                         threshold: 10240,
                         minRatio: 0.8
-                    })
+                    }),
+
+                    // 使用包分析工具
+                    new BundleAnalyzerPlugin()
                 ]
             }
         }
