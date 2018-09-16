@@ -1,10 +1,19 @@
+const path = require('path')
 const configs = require('./config')
+const vuxLoader = require('vux-loader')
 
 // 用于做相应的merge处理
 const merge = require('webpack-merge')
 const { DefinePlugin } = require('webpack')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-const cfg = process.env.NODE_ENV === 'production' ? configs.build.env : configs.dev.env
+const isPro = process.env.NODE_ENV === 'production'
+const cfg = isPro ? configs.build.env : configs.dev.env
+
+const resolve = dir => {
+    return path.join(__dirname, dir)
+}
 
 module.exports = {
 	baseUrl: 'vue',
@@ -20,6 +29,13 @@ module.exports = {
                 })
             )
 
+        config.resolve.alias
+            .set('@', resolve('src'))
+            .set('_lib', resolve('src/common'))
+            .set('_com', resolve('src/components'))
+            .set('_img', resolve('src/assets/images'))
+            .set('_ser', resolve('src/services'))
+
         config.plugin('define')
             .tap(args => {
                 let name = 'process.env';
@@ -33,9 +49,31 @@ module.exports = {
 	configureWebpack: config => {
         // config.plugins = [] // 这样会直接将 plugins 置空
         
+        require('vux-loader').merge(config, {
+            options: {},
+            plugins: ['vux-ui']
+        })
+        
         // 使用 return 一个对象会通过 webpack-merge 进行合并
-        return {
-            plugins: []
+        if (isPro) {
+            return {
+                plugins: [
+
+                    // 开启 Gzip 压缩
+                    new CompressionWebpackPlugin({
+                        asset: '[path].gz[query]',
+                        algorithm: 'gzip',
+                        test: new RegExp(
+                            '\\.(js|css)$'
+                        ),
+                        threshold: 10240,
+                        minRatio: 0.8
+                    }),
+
+                    // 使用包分析工具
+                    new BundleAnalyzerPlugin()
+                ]
+            }
         }
     },
 
@@ -51,9 +89,24 @@ module.exports = {
                 target: 'https://api.github.com',
                 changeOrigin: true
                 // pathRewrite: {'^/api': ''}
+            },
+            '/apis': {
+                target: 'http://apis.juhe.cn',
+                changeOrigin: true,
+                pathRewrite: {'^/apis': ''}
+            },
+            '/japis': {
+                target: 'http://japi.juhe.cn',
+                changeOrigin: true,
+                pathRewrite: {'^/japis': ''}
+            },
+            '/juheapi': {
+                target: 'http://api.juheapi.com/',
+                changeOrigin: true,
+                pathRewrite: {'^/juheapi': ''}
             }
         },
-        progress: true,
+        progress: false,
         
         // 提供在服务器内部的其他中间件之前执行自定义中间件的能力
         before: app => {

@@ -4,6 +4,8 @@ const configs = require('./config')
 // 用于做相应的merge处理
 const merge = require('webpack-merge')
 const { DefinePlugin } = require('webpack')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const isPro = process.env.NODE_ENV === 'production'
 const cfg = isPro ? configs.build.env : configs.dev.env
@@ -47,8 +49,25 @@ module.exports = {
         // config.plugins = [] // 这样会直接将 plugins 置空
         
         // 使用 return 一个对象会通过 webpack-merge 进行合并
-        return {
-            plugins: []
+        if (isPro) {
+            return {
+                plugins: [
+
+                    // 开启 Gzip 压缩
+                    new CompressionWebpackPlugin({
+                        asset: '[path].gz[query]',
+                        algorithm: 'gzip',
+                        test: new RegExp(
+                            '\\.(js|css)$'
+                        ),
+                        threshold: 10240,
+                        minRatio: 0.8
+                    }),
+
+                    // 使用包分析工具
+                    new BundleAnalyzerPlugin()
+                ]
+            }
         }
     },
 

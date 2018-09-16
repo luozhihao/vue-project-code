@@ -9,6 +9,8 @@ console.log(JSON.stringify(process.env))
 if (process.env.NODE_ENV !== 'production') {
     var VConsole = require('vconsole/dist/vconsole.min.js')
     var vConsole = new VConsole()
+
+    Vue.config.performance = true;
 }
 
 new Vue({

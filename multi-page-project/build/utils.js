@@ -58,7 +58,6 @@ exports.htmlPlugin = function(configs) {
                 minify: {
                     removeComments: true, // 删除html中的注释代码
                     collapseWhitespace: true, // 删除html中的空白符
-                    // removeAttributeQuotes: true // 删除html元素中属性的引号
                 },
                 chunksSortMode: 'manual'// 按manual的顺序引入
             })
@@ -99,9 +98,8 @@ exports.setPages = function(configs) {
                 minify: {
                     removeComments: true, // 删除html中的注释代码
                     collapseWhitespace: true, // 删除html中的空白符
-                    // removeAttributeQuotes: true // 删除html元素中属性的引号
                 },
-                chunksSortMode: 'manual'//按manual的顺序引入
+                chunksSortMode: 'manual'// 按manual的顺序引入
             })
         }
 

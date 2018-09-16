@@ -54,7 +54,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 button {
 	border: 1px solid #ccc;
 	border-radius: 5px;

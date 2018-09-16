@@ -7,9 +7,14 @@ export default class Http {
             method: method,
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+            }
         };
+
+        if (method === 'GET') {
+            url += this.formatQuery(data)
+        } else {
+            param['body'] = JSON.stringify(data)
+        }
 
         // Tips.loading(); // 可调用 loading 组件
 
@@ -59,5 +64,22 @@ export default class Http {
 
     static delete(url, data) {
         return this.request('DELETE', url, data)
+    }
+
+    /**
+    * url处理
+    */
+    static formatQuery(query) {
+        var params = [];
+
+        if (query) {
+            for (var item in query) {
+                let vals = query[item];
+                if (vals !== undefined) {
+                    params.push(item + '=' + query[item])
+                }
+            }
+        }
+        return params.length ? '?' + params.join('&') : '';
     }
 }

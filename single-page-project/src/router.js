@@ -1,16 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Home from './views/Home.vue'
-// import About from './views/About.vue'
 
-// 用车提示页
+// 首页
 const Home = (resolve => {
     require.ensure(['./views/Home.vue'], () => {
         resolve(require('./views/Home.vue'))
     })
 })
 
-// 用车提示页
+// 关于
 const About = (resolve => {
     require.ensure(['./views/About.vue'], () => {
         resolve(require('./views/About.vue'))
