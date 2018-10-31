@@ -24,7 +24,6 @@ import { XInput, Group, XButton} from 'vux'
 import { getTestData } from '@/services/moduleA'
 
 export default {
-  	name: 'about',
   	data() {
   		return {
   			dataStatus: '未获取'

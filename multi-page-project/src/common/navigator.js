@@ -4,7 +4,7 @@ export default class Navigator {
     static openRouter({ query = {}, name = '', type = '' } = {}) {
         let params = ''
 
-        function formatQuery(query) {
+        let formatQuery = query => {
         	let params = ''
 
         	if (query) {
