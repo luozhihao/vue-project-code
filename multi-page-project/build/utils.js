@@ -15,7 +15,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 多入口配置
 // 通过glob模块读取page文件夹下的所有对应文件夹下的js后缀文件，如果该文件存在
 // 那么就作为入口处理
-exports.getEntries = function() {
+exports.getEntries = () => {
     let entryFiles = glob.sync(PAGE_PATH + '/*/*.js')
     let map = {}
 
@@ -31,7 +31,7 @@ exports.getEntries = function() {
 
 // 多页面输出配置
 // 与上面的多页面入口配置相同，读取page文件夹下的对应的html后缀文件，然后放入数组中
-exports.htmlPlugin = function(configs) {
+exports.htmlPlugin = configs => {
     let entryHtml = glob.sync(PAGE_PATH + '/*/*.html')
     let arr = []
 
@@ -69,7 +69,7 @@ exports.htmlPlugin = function(configs) {
 }
 
 // pages 多入口配置
-exports.setPages = function(configs) {
+exports.setPages = configs => {
     let entryFiles = glob.sync(PAGE_PATH + '/*/*.js');
     let map = {};
 
