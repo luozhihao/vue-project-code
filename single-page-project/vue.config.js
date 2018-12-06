@@ -15,7 +15,7 @@ const resolve = dir => {
 }
 
 module.exports = {
-	baseUrl: 'vue',
+	baseUrl: './',
 	outputDir: 'dist',
 	productionSourceMap: true,
 	chainWebpack: config => {
