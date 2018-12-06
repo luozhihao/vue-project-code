@@ -75,7 +75,7 @@ exports.setPages = configs => {
 
     entryFiles.forEach(filePath => {
         let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));
-        let tmp = filePath.substring(0, filePath.lastIndexOf('\/'));
+        let tmp = filePath.substring(0, filePath.lastIndexOf('.'));
 
         let conf = {
             // page 的入口
